@@ -5,15 +5,17 @@ public class Review {
     private Integer service;
     private Integer comfort;
     private Integer price;
-    private Integer distance_from_airport;
-    private Integer hotel_id;
+    private Integer distanceFromAirport;
+    private Integer hotelId;
+    private String city;
+    private String country;
 
-    public Integer getDistance_from_airport() {
-        return distance_from_airport;
+    public Integer getDistanceFromAirport() {
+        return distanceFromAirport;
     }
 
-    public void setDistance_from_airport(Integer distance_from_airport) {
-        this.distance_from_airport = distance_from_airport;
+    public void setDistanceFromAirport(Integer distanceFromAirport) {
+        this.distanceFromAirport = distanceFromAirport;
     }
 
     public String getMessage() {
@@ -48,19 +50,37 @@ public class Review {
         this.price = price;
     }
 
-    public void setHotel_id(int hotel_id){
-        this.hotel_id = hotel_id;
+    public void setHotelId(int hotelId){
+        this.hotelId = hotelId;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "\"hotel_id\":" + hotel_id +
-                ", \"message\":\"" + message +
-                "\", \"service\":" + service +
-                ", \"comfort\":" + comfort +
-                ", \"price\":" + price +
-                ", \"distance_from_airport\":" + distance_from_airport +
-                "}";
+        return "Review{" +
+                "message='" + message + '\'' +
+                ", service=" + service +
+                ", comfort=" + comfort +
+                ", price=" + price +
+                ", distanceFromAirport=" + distanceFromAirport +
+                ", hotelId=" + hotelId +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }
