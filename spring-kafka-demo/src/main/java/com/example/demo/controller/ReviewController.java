@@ -62,7 +62,7 @@ public class ReviewController {
         hotel.setName(name);
         hotel.setLink(url);
         sender.sendHotel(hotel);
-        return "redirect:/addHotel";
+        return "redirect:/hotel";
     }
 
     @RequestMapping(value = "/hotel",method = RequestMethod.GET)
