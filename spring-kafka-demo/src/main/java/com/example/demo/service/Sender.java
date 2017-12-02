@@ -21,4 +21,9 @@ public class Sender {
         System.out.println("Sending " + review.toString());
         kafkaTemplate.send(topic, review.toString());
     }
+    
+    public void sendHotel(Hotel hotel){
+        System.out.println("Sending " + hotel.toString());
+        kafkaTemplate.send(topic, hotel.toString());
+    }
 }
