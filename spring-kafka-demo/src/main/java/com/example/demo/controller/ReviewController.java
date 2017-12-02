@@ -46,6 +46,29 @@ public class ReviewController {
     public String test(){
         return "sendPage";
     }
+    
+     @RequestMapping(value = "/hotel",method = RequestMethod.POST)
+    public String addHotel(@RequestParam("description") String description,@RequestParam("city") String city,
+                           @RequestParam("id") int id,@RequestParam("name") String name,
+                           @RequestParam("url") String url,@RequestParam("country") String country,
+                           @RequestParam("pic") String pic){
+        Hotel hotel=new Hotel();
+        hotel.setAverage_score(0.0F);
+        hotel.setCity(city);
+        hotel.setCountry(country);
+        hotel.setDescription(description);
+        hotel.setIcon_url(pic);
+        hotel.setId(id);
+        hotel.setName(name);
+        hotel.setLink(url);
+        sender.sendHotel(hotel);
+        return "redirect:/addHotel";
+    }
+
+    @RequestMapping(value = "/hotel",method = RequestMethod.GET)
+    public String hotel(){
+        return "addHotel";
+    }
 
     @Autowired
     public ReviewController(Sender sender) {
