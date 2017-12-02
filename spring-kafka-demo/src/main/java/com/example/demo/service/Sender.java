@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.Hotel;
 import com.example.demo.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
