@@ -34,7 +34,6 @@ object Main {
     case class Review(hotel_id: Long, message: String, service: Byte, comfort: Byte, price: Byte, distance_from_airport: Byte)
     val lines = messages.map(_._2)
     lines.print()
-
     val writeConfig = WriteConfig(Map("collection" -> "reviews", "writeConcern.w" -> "majority"), Some(WriteConfig(sparkConf)))
     lines.foreachRDD(rdd => {
       val messages = sparkSession.read.json(rdd)
