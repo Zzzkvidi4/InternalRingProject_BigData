@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.Hotel;
 import com.example.demo.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,5 +21,10 @@ public class Sender {
     public void send(Review review) {
         System.out.println("Sending " + review.toString());
         kafkaTemplate.send(topic, review.toString());
+    }
+    
+    public void sendHotel(Hotel hotel){
+        System.out.println("Sending " + hotel.toString());
+        kafkaTemplate.send(topic, hotel.toString());
     }
 }
