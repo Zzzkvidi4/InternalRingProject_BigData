@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h2>Добавить отзыв</h2>
+    <form action="" th:action="@{/review}" method="post">
+        <div>
+            <label for="country">Выберете страну</label>
+            <input type="text" name="country" id="country"/>
+        </div>
+        <div>
+            <label for="city">Выберете город</label>
+            <input type="text" name="city" id="city"/>
+        </div>
+        <div>
+            <label for="hotel">Выберете отель</label>
+            <input type="number" name="hotel" id="hotel"/>
+        </div>
+        <div>
+            <label for="service">Оцените сервис</label>
+            <input type="number" name="service" id="service" min="1" max="10"/>
+        </div>
+        <div>
+            <label for="comfort">Оцените комфорт</label>
+            <input type="number" name="comfort" id="comfort" min="1" max="10"/>
+        </div>
+        <div>
+            <label for="price">Оцените цены</label>
+            <input type="number" name="price" id="price" min="1" max="10"/>
+        </div>
+        <div>
+            <label for="distance">Оцените доступность(расстояние до аэропорта)</label>
+            <input type="number" name="distance" id="distance" min="1" max="10"/>
+        </div>
+        <div>
+            <label for="text">Дополнительная информация</label>
+            <textarea rows="10" cols="45" name="text" id="text"></textarea>
+        </div>
+        <div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
