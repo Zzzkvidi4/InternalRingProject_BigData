@@ -61,7 +61,7 @@ public class ReviewController {
         hotel.setId(id);
         hotel.setName(name);
         hotel.setLink(url);
-        sender.sendHotel(hotel);
+        //Here will be adding hotel to Mongo
         return "redirect:/hotel";
     }
 
