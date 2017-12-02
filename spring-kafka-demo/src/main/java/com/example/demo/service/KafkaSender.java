@@ -8,23 +8,18 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Sender {
+public class KafkaSender {
     @Value("${spring.kafka.template.default-topic}")
     private String topic;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    public Sender(KafkaTemplate<String, String> kafkaTemplate) {
+    public KafkaSender(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void send(Review review) {
         System.out.println("Sending " + review.toString());
         kafkaTemplate.send(topic, review.toString());
-    }
-    
-    public void sendHotel(Hotel hotel){
-        System.out.println("Sending " + hotel.toString());
-        kafkaTemplate.send(topic, hotel.toString());
     }
 }

@@ -6,9 +6,9 @@ public class Hotel {
     private String country;
     private String city;
     private String description;
-    private Float average_score;
+    private Float averageScore;
     private String link;
-    private String icon_url;
+    private String icon;
 
     public Integer getId() {
         return id;
@@ -50,12 +50,12 @@ public class Hotel {
         this.description = description;
     }
 
-    public Float getAverage_score() {
-        return average_score;
+    public Float getAverageScore() {
+        return averageScore;
     }
 
-    public void setAverage_score(Float average_score) {
-        this.average_score = average_score;
+    public void setAverageScore(Float averageScore) {
+        this.averageScore = averageScore;
     }
 
     public String getLink() {
@@ -66,24 +66,25 @@ public class Hotel {
         this.link = link;
     }
 
-    public String getIcon_url() {
-        return icon_url;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setIcon_url(String icon_url) {
-        this.icon_url = icon_url;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     @Override
     public String toString() {
-        return "{\"id\":" + id +
-                ",\"name\":\"" + name + "\"" +
-                ",\"country\":\"" + country + "\"" +
-                ",\"city\":\"" + city + "\"" +
-                ",\"description\":\"" + description + "\"" +
-                ",\"average_score\":" + average_score +
-                ",\"link\":\"" + link + "\"" +
-                ",\"icon_url\":\"" + icon_url + "\"" +
+        return "Hotel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", description='" + description + '\'' +
+                ", averageScore=" + averageScore +
+                ", link='" + link + '\'' +
+                ", icon='" + icon + '\'' +
                 '}';
     }
 }

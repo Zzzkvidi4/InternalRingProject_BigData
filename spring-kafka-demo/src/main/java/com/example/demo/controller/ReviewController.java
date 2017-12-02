@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.Hotel;
 import com.example.demo.domain.Review;
-import com.example.demo.service.Sender;
+import com.example.demo.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,14 +11,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @Controller
 public class ReviewController {
-
-    private Sender sender;
-
-    @PostMapping(value = "/send")
-    public ResponseEntity sendData(@RequestBody Review demo) {
-        sender.send(demo);
-        return ok().body("created");
-    }
+    private ReviewService reviewService;
 
     @GetMapping(value = "/")
     public ResponseEntity getStatus() {
@@ -28,50 +20,18 @@ public class ReviewController {
 
 
     @RequestMapping(value = "/review", method = RequestMethod.POST)
-    public String testSend(@RequestParam("hotel") int hotel, @RequestParam("text") String text, @RequestParam("distance") int distance,
-                           @RequestParam("service") int service, @RequestParam("comfort") int comfort,
-                           @RequestParam("price") int price) {
-        Review review = new Review();
-        review.setHotel_id(hotel);
-        review.setMessage(text);
-        review.setComfort(comfort);
-        review.setPrice(price);
-        review.setService(service);
-        review.setDistance_from_airport(distance);
-        sender.send(review);
+    public String saveReview(@ModelAttribute("review") Review review) {
+        reviewService.save(review);
         return "redirect:/review";
     }
 
     @RequestMapping(value = "/review", method = RequestMethod.GET)
-    public String test() {
-        return "sendPage";
-    }
-
-    @RequestMapping(value = "/hotel", method = RequestMethod.POST)
-    public String addHotel(@RequestParam("description") String description, @RequestParam("city") String city,
-                           @RequestParam("id") int id, @RequestParam("name") String name,
-                           @RequestParam("url") String url, @RequestParam("country") String country,
-                           @RequestParam("pic") String pic) {
-        Hotel hotel = new Hotel();
-        hotel.setAverage_score(0.0F);
-        hotel.setCity(city);
-        hotel.setCountry(country);
-        hotel.setDescription(description);
-        hotel.setIcon_url(pic);
-        hotel.setId(id);
-        hotel.setName(name);
-        hotel.setLink(url);
-        sender.sendHotel(hotel);
-        return "redirect:/hotel";
-    }
-
-    @RequestMapping(value = "/hotel", method = RequestMethod.GET)
-    public String hotel() {
-        return "addHotel";
+    public String review() {
+        return "review";
     }
 
     @Autowired
-    public ReviewController(Sender sender) {
-        this.sender = sender;
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
     }
 }
