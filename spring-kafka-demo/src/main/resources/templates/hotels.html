@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Отели</title>
-    <link type="text/css" href="../css/bootstrap.css" rel="stylesheet" />
+    <link type="text/css" href="../css/bootstrap.css" rel="stylesheet"/>
     <link type="text/css" href="../css/style.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="hotel-container">
-        <table class="table table-striped">
-            <tr>
-                <th>SNO</th>
-                <th>NAME</th>
-                <th>CITY</th>
-                <th>COUNTRY</th>
-            </tr>
-            <!--/*@thymesVar id="hotels" type="java.util.List<com.example.demo.domain.Hotel>"*/-->
-            <tr th:each="hotel,iterationStatus  : ${hotels}">
-                <td th:text="${iterationStatus.count}">1</td>
-                <td>
-                    <a th:href="@{|/hotels/${hotel.id}|}">
-                        <span th:text="${hotel.name}"></span>
-                    </a>
-                </td>
-                <td th:text="${hotel.city}">City</td>
-                <td th:text="${hotel.country}">Country</td>
-            </tr>
-        </table>
+<div class="hotel-container">
+    <div>
+        <a th:href="@{/hotels/}" class="btn btn-success">Добавить отель</a>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
+    <table class="table table-striped">
+        <tr>
+            <th>Название</th>
+            <th>Город</th>
+            <th>Страна</th>
+        </tr>
+        <!--/*@thymesVar id="hotels" type="java.util.List<com.example.demo.domain.Hotel>"*/-->
+        <tr th:each="hotel,iterationStatus  : ${hotels}">
+            <td>
+                <a th:href="@{|/hotels/${hotel.id}|}">
+                    <span th:text="${hotel.name}"></span>
+                </a>
+            </td>
+            <td th:text="${hotel.city}"></td>
+            <td th:text="${hotel.country}"></td>
+        </tr>
+    </table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="../js/bootstrap.js"></script>
 </body>
 </html>

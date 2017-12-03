@@ -3,71 +3,35 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
-    <link type="text/css" href="../css/bootstrap.css" rel="stylesheet"/>
+    <link type="text/css" href="../../css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
     <!--/*@thymesVar id="hotel" type="com.example.demo.domain.Hotel"*/-->
-    <h2>Добавить отзыв на отель <i th:text="${hotel.name}"></i></h2>
+    <h2 class="text-center">Добавить отзыв на отель <i th:text="${hotel.name}"></i></h2>
     <form action="" th:action="@{|/hotels/${hotel.id}/review/|}" method="post" name="review">
         <div class="form-group">
             <label for="service">Оцените сервис</label>
-            <select type="number" name="service" id="service" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+            <select  type="number" name="service" id="service" class="form-control">
+                <option th:each="n : ${#numbers.sequence(1,10)}" th:value="${n}" th:text="${n}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="comfort">Оцените комфорт</label>
             <select type="number" name="comfort" id="comfort" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                <option th:each="n : ${#numbers.sequence(1,10)}" th:value="${n}" th:text="${n}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="price">Оцените цены</label>
             <select type="number" name="price" id="price" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                <option th:each="n : ${#numbers.sequence(1,10)}" th:value="${n}" th:text="${n}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="distance-from-airport">Оцените доступность(расстояние до аэропорта)</label>
             <select type="number" name="distanceFromAirport" id="distance-from-airport" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                <option th:each="n : ${#numbers.sequence(1,10)}" th:value="${n}" th:text="${n}"></option>
             </select>
         </div>
         <div class="form-group">
@@ -79,7 +43,7 @@
         </div>
     </form>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
+    <script src="../../js/bootstrap.js"></script>
 </div>
 </body>
 </html>
