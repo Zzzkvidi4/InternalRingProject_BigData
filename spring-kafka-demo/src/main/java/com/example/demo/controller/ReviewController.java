@@ -1,40 +1,36 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Review;
+import com.example.demo.service.HotelService;
 import com.example.demo.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.ResponseEntity.ok;
 
 @Controller
+@RequestMapping("/hotels/{hotelId}/review")
 public class ReviewController {
     private ReviewService reviewService;
+    private HotelService hotelService;
 
-    @GetMapping(value = "/")
-    public ResponseEntity getStatus() {
-        return ok().body("Application is running");
-    }
-
-
-    @RequestMapping(value = "/review", method = RequestMethod.POST)
-    public String saveReview(@ModelAttribute("review") Review review) {
-        reviewService.save(review);
-        return "redirect:/hotel/" + review.getHotelId();
-    }
-
-    @RequestMapping(value = "/review/{hotel_id}", method = RequestMethod.GET)
-    public String review(@PathVariable("hotel_id") int hotel_id, Model model) {
-        model.addAttribute("hotel_id", hotel_id);
+    @GetMapping
+    public String addReviewPage(@PathVariable("hotelId") Long hotelId, Model model) {
+        model.addAttribute("hotel", hotelService.getHotelById(hotelId));
         return "review";
+    }
+
+    @PostMapping("/")
+    public String saveReview(@PathVariable("hotelId") Long hotelId, @ModelAttribute("review") Review review) {
+        reviewService.save(review);
+        return "redirect:/hotels/" + hotelId;
     }
 
 
     @Autowired
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, HotelService hotelService) {
         this.reviewService = reviewService;
+        this.hotelService = hotelService;
     }
 }

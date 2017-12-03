@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.domain.Hotel;
 import com.example.demo.domain.Review;
 import com.example.demo.service.HotelService;
-import com.example.demo.service.KafkaSender;
 import com.example.demo.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,33 +10,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
+@RequestMapping("/hotels")
 public class HotelController {
     private HotelService hotelService;
+    private ReviewService reviewService;
 
-    @RequestMapping(value = "/hotel", method = RequestMethod.GET)
-    public String hotel() {
-        return "hotel";
+    @GetMapping("/")
+    public String addHotelPage() {
+        return "addHotel";
     }
 
-    @RequestMapping(value = "/hotel/{hotel_id}", method = RequestMethod.GET)
-    public String hotel(@PathVariable int hotel_id, Model model) {
-        Hotel hotel = hotelService.getHotelById(hotel_id);
-        ArrayList<Review> reviews = ReviewService.getReviewsByHotelId(hotel_id);
+    @GetMapping("/{hotelId}")
+    public String getHotelInfo(@PathVariable("hotelId") Long hotelId, Model model) {
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        List<Review> reviews = reviewService.getReviewsByHotelId(hotelId);
         model.addAttribute("hotel", hotel);
         model.addAttribute("reviews", reviews);
         return "hotel_info";
     }
 
-    @RequestMapping(value = "/hotel", method = RequestMethod.POST)
+    @PostMapping("/")
     public String saveHotel(@ModelAttribute("hotel") Hotel hotel) {
         hotelService.save(hotel);
-        return "hotels";
+        return "redirect:/hotels";
     }
 
     @Autowired
-    public HotelController(HotelService hotelService) {
+    public HotelController(HotelService hotelService, ReviewService reviewService) {
         this.hotelService = hotelService;
+        this.reviewService = reviewService;
     }
 }

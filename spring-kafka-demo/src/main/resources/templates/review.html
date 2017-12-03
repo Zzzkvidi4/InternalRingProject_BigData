@@ -3,25 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
-    <link type="text/css" href="../css/bootstrap.css" rel="stylesheet" />
+    <link type="text/css" href="../css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-    <h2>Добавить отзыв</h2>
-    <!--/*@thymesVar id="hotel_id" type=""*/-->
-    <form action="" th:action="@{/review/}" method="post" name="review">
-        <div class="form-group">
-            <label for="country">Выберите страну</label>
-            <input type="text" name="country" id="country" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="city">Выберите город</label>
-            <input class="form-control" type="text" name="city" id="city"/>
-        </div>
-        <div  class="form-group">
-            <label for="hotel-id">Выберите отель</label>
-            <input type="number" name="hotelId" id="hotel-id" class="form-control" th:value="${hotel_id}"/>
-        </div>
+    <!--/*@thymesVar id="hotel" type="com.example.demo.domain.Hotel"*/-->
+    <h2>Добавить отзыв на отель <i th:text="${hotel.name}"></i></h2>
+    <form action="" th:action="@{|/hotels/${hotel.id}/review/|}" method="post" name="review">
         <div class="form-group">
             <label for="service">Оцените сервис</label>
             <select type="number" name="service" id="service" class="form-control">
@@ -87,7 +75,6 @@
             <textarea rows="10" cols="45" name="message" id="message" class="form-control"></textarea>
         </div>
         <div>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button type="submit" class="btn btn-primary">Добавить</button>
         </div>
     </form>
