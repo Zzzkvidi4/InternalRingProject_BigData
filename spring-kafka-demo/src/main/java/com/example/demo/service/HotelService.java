@@ -18,7 +18,7 @@ public class HotelService {
                     .append("country",hotel.getCountry()).append("city",hotel.getCity())
                     .append("description",hotel.getDescription()).append("average_score",hotel.getAverageScore())
                     .append("link",hotel.getLink());
-            DBCollection collection=database.getCollection("Hotels");
+            DBCollection collection=database.getCollection("hotels");
             collection.insert(hotelObject);
         } catch (UnknownHostException e) {
             e.printStackTrace();

@@ -76,7 +76,7 @@ public class Review {
                 ", \"service\":" + service +
                 ", \"comfort\":" + comfort +
                 ", \"price\":" + price +
-                ", \"distance_from_airport\"=" + distanceFromAirport +
-                ", \"hotel_id\":" + hotelId + "\"}";
+                ", \"distance_from_airport\":" + distanceFromAirport +
+                ", \"hotel_id\":" + hotelId + "}";
     }
 }
