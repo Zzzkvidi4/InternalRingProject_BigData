@@ -9,9 +9,12 @@ import java.util.List;
 
 @Service
 public class HotelService {
+    private static final String COLLECTION_NAME = "hotels";
     private HotelRepository hotelRepository;
+    private CounterService counterService;
 
     public void save(Hotel hotel) {
+        hotel.setId(counterService.getNextSequence(COLLECTION_NAME));
         hotelRepository.save(hotel);
     }
 
@@ -24,7 +27,8 @@ public class HotelService {
     }
 
     @Autowired
-    public HotelService(HotelRepository hotelRepository) {
+    public HotelService(HotelRepository hotelRepository, CounterService counterService) {
         this.hotelRepository = hotelRepository;
+        this.counterService = counterService;
     }
 }
