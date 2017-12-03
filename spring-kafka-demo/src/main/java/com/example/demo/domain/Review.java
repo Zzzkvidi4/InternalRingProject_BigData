@@ -1,12 +1,14 @@
 package com.example.demo.domain;
 
+import com.mongodb.DBObject;
+
 public class Review {
     private String message;
     private Integer service;
     private Integer comfort;
     private Integer price;
     private Integer distanceFromAirport;
-    private Integer hotelId;
+    private long hotelId;
     private String city;
     private String country;
 
@@ -50,8 +52,12 @@ public class Review {
         this.price = price;
     }
 
-    public void setHotelId(int hotelId){
+    public void setHotelId(long hotelId){
         this.hotelId = hotelId;
+    }
+
+    public long getHotelId() {
+        return hotelId;
     }
 
     public String getCountry() {
@@ -78,5 +84,16 @@ public class Review {
                 ", \"price\":" + price +
                 ", \"distance_from_airport\":" + distanceFromAirport +
                 ", \"hotel_id\":" + hotelId + "}";
+    }
+
+    public static Review convert(DBObject dbReview){
+        Review review = new Review();
+        review.hotelId = (long)dbReview.get("hotel_id");
+        review.message = (String)dbReview.get("message");
+        review.comfort = (int)dbReview.get("comfort");
+        review.service = (int)dbReview.get("service");
+        review.price = (int)dbReview.get("price");
+        review.distanceFromAirport = (int)dbReview.get("distance_from_airport");
+        return review;
     }
 }

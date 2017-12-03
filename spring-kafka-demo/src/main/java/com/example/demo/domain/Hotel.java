@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.mongodb.DBObject;
+
 public class Hotel {
     private Integer id;
     private String name;
@@ -85,5 +87,16 @@ public class Hotel {
                 ", \"averageScore\":" + averageScore +
                 ", \"link\":\"" + link + '\"' +
                 ", \"icon\":\"" + icon + "\"}";
+    }
+
+    public static Hotel convert(DBObject dbHotel){
+        Hotel hotel = new Hotel();
+        hotel.setId((int)dbHotel.get("id"));
+        hotel.setName((String)dbHotel.get("name"));
+        hotel.setCountry((String)dbHotel.get("country"));
+        hotel.setCity((String)dbHotel.get("city"));
+        hotel.setLink((String)dbHotel.get("link"));
+        hotel.setDescription((String)dbHotel.get("description"));
+        return hotel;
     }
 }

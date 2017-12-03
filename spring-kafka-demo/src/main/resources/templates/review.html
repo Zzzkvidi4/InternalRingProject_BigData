@@ -8,7 +8,8 @@
 <body>
 <div class="container">
     <h2>Добавить отзыв</h2>
-    <form action="" th:action="@{/review}" method="post" name="review">
+    <!--/*@thymesVar id="hotel_id" type=""*/-->
+    <form action="" th:action="@{/review/}" method="post" name="review">
         <div class="form-group">
             <label for="country">Выберите страну</label>
             <input type="text" name="country" id="country" class="form-control"/>
@@ -19,7 +20,7 @@
         </div>
         <div  class="form-group">
             <label for="hotel-id">Выберите отель</label>
-            <input type="number" name="hotelId" id="hotel-id" class="form-control"/>
+            <input type="number" name="hotelId" id="hotel-id" class="form-control" th:value="${hotel_id}"/>
         </div>
         <div class="form-group">
             <label for="service">Оцените сервис</label>
