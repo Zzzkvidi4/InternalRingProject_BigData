@@ -82,7 +82,7 @@ object Main {
     //throw collected data to mongo
     lines.foreachRDD(rdd => {
       val messages = sparkSession.read.json(rdd)
-      messages.show()
+      //messages.show()
       val reviews = messages.rdd.map(row => {
         val hotel_id = row.getAs[Long]("hotel_id")
         val message = row.getAs[String]("message")
@@ -91,10 +91,17 @@ object Main {
         val price = row.getAs[Long]("price").toByte
         val distance_from_airport = row.getAs[Long]("distance_from_airport").toByte
         Review(hotel_id, message, service, comfort, price, distance_from_airport)
-      })
-      reviews.foreach(review => print(review))
-      val documents = rdd.map(line => new Document().append("review", line))
-      MongoSpark.save(documents, writeConfigReviews)
+      }).map(review =>
+        new Document()
+          .append("hotel_id", review.hotel_id)
+          .append("message", review.message)
+          .append("service", review.service)
+          .append("comfort", review.comfort)
+          .append("price", review.price)
+          .append("distance_from_airport", review.distance_from_airport)
+      )
+      //reviews.foreach(review => print(review))
+      MongoSpark.save(reviews, writeConfigReviews)
     })
     sparkStreamingContext.start()
     sparkStreamingContext.awaitTermination()
