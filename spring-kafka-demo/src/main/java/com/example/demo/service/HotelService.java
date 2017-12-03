@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.HotelRepository;
 import com.example.demo.domain.Hotel;
 import com.mongodb.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.UnknownHostException;
@@ -11,20 +11,12 @@ import java.util.ArrayList;
 
 @Service
 public class HotelService {
-    public void save(Hotel hotel){
-        MongoClient mongoClient= null;
-        try {
-            mongoClient = new MongoClient();
-            DB database=mongoClient.getDB("BigData");
-            DBObject hotelObject=new BasicDBObject("id",hotel.getId()).append("name",hotel.getName())
-                    .append("country",hotel.getCountry()).append("city",hotel.getCity())
-                    .append("description",hotel.getDescription()).append("average_score",hotel.getAverageScore())
-                    .append("link",hotel.getLink());
-            DBCollection collection=database.getCollection("hotels");
-            collection.insert(hotelObject);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }        
+
+    @Autowired
+    HotelRepository hotelRepository;
+
+    public void save(Hotel hotel) {
+        hotelRepository.save(hotel);
     }
 
     public ArrayList<Hotel> getHotels(){
