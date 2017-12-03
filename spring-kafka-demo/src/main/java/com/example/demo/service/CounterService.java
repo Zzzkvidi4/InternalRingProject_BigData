@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.CounterRepository;
 import com.example.demo.domain.Counter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -13,8 +14,15 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @Service
 public class CounterService {
     private MongoOperations mongo;
+    private CounterRepository counterRepository;
 
     public long getNextSequence(String collectionName) {
+        if (counterRepository.findOneById(collectionName)==null){
+            Counter counter=new Counter();
+            counter.setId("hotels");
+            counter.setSeq(0);
+            counterRepository.save(counter);
+        }
         Counter counter = mongo.findAndModify(
                 query(where("_id").is(collectionName)),
                 new Update().inc("seq", 1),
@@ -24,7 +32,8 @@ public class CounterService {
     }
 
     @Autowired
-    public CounterService(MongoOperations mongo) {
+    public CounterService(MongoOperations mongo, CounterRepository counterRepository) {
         this.mongo = mongo;
+        this.counterRepository=counterRepository;
     }
 }

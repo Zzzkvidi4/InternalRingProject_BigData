@@ -1,13 +1,11 @@
 package com.example.demo.domain;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "hotels")
 public class Hotel {
     @Id
-    private ObjectId dbId;
     private Long id;
     private String name;
     private String country;
@@ -92,13 +90,5 @@ public class Hotel {
                 ", \"averageScore\":" + averageScore +
                 ", \"link\":\"" + link + '\"' +
                 ", \"icon\":\"" + icon + "\"}";
-    }
-
-    public ObjectId getDbId() {
-        return dbId;
-    }
-
-    public void setDbId(ObjectId dbId) {
-        this.dbId = dbId;
     }
 }
