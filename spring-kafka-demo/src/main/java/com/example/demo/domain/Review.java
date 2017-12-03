@@ -8,9 +8,21 @@ public class Review {
     private Integer comfort;
     private Integer price;
     private Integer distanceFromAirport;
-    private long hotelId;
+    private Long hotelId;
     private String city;
     private String country;
+
+    public Review() {
+    }
+
+    public Review(DBObject dbReview) {
+        this.hotelId = (long) dbReview.get("hotel_id");
+        this.message = (String) dbReview.get("message");
+        this.comfort = (int) dbReview.get("comfort");
+        this.service = (int) dbReview.get("service");
+        this.price = (int) dbReview.get("price");
+        this.distanceFromAirport = (int) dbReview.get("distance_from_airport");
+    }
 
     public Integer getDistanceFromAirport() {
         return distanceFromAirport;
@@ -52,11 +64,11 @@ public class Review {
         this.price = price;
     }
 
-    public void setHotelId(long hotelId){
+    public void setHotelId(Long hotelId) {
         this.hotelId = hotelId;
     }
 
-    public long getHotelId() {
+    public Long getHotelId() {
         return hotelId;
     }
 
@@ -86,14 +98,4 @@ public class Review {
                 ", \"hotel_id\":" + hotelId + "}";
     }
 
-    public static Review convert(DBObject dbReview){
-        Review review = new Review();
-        review.hotelId = (long)dbReview.get("hotel_id");
-        review.message = (String)dbReview.get("message");
-        review.comfort = (int)dbReview.get("comfort");
-        review.service = (int)dbReview.get("service");
-        review.price = (int)dbReview.get("price");
-        review.distanceFromAirport = (int)dbReview.get("distance_from_airport");
-        return review;
-    }
 }

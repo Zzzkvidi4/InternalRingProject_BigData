@@ -1,12 +1,14 @@
 package com.example.demo.domain;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Hotels")
+@Document(collection = "hotels")
 public class Hotel {
     @Id
-    private Integer id;
+    private ObjectId dbId;
+    private Long id;
     private String name;
     private String country;
     private String city;
@@ -15,11 +17,11 @@ public class Hotel {
     private String link;
     private String icon;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -92,14 +94,11 @@ public class Hotel {
                 ", \"icon\":\"" + icon + "\"}";
     }
 
-    public static Hotel convert(DBObject dbHotel){
-        Hotel hotel = new Hotel();
-        hotel.setId((int)dbHotel.get("id"));
-        hotel.setName((String)dbHotel.get("name"));
-        hotel.setCountry((String)dbHotel.get("country"));
-        hotel.setCity((String)dbHotel.get("city"));
-        hotel.setLink((String)dbHotel.get("link"));
-        hotel.setDescription((String)dbHotel.get("description"));
-        return hotel;
+    public ObjectId getDbId() {
+        return dbId;
+    }
+
+    public void setDbId(ObjectId dbId) {
+        this.dbId = dbId;
     }
 }
