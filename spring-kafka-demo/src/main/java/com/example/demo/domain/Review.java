@@ -72,15 +72,11 @@ public class Review {
 
     @Override
     public String toString() {
-        return "Review{" +
-                "message='" + message + '\'' +
-                ", service=" + service +
-                ", comfort=" + comfort +
-                ", price=" + price +
-                ", distanceFromAirport=" + distanceFromAirport +
-                ", hotelId=" + hotelId +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                '}';
+        return "{\"message\":\"" + message + '\"' +
+                ", \"service\":" + service +
+                ", \"comfort\":" + comfort +
+                ", \"price\":" + price +
+                ", \"distance_from_airport\"=" + distanceFromAirport +
+                ", \"hotel_id\":" + hotelId + "\"}";
     }
 }

@@ -76,15 +76,14 @@ public class Hotel {
 
     @Override
     public String toString() {
-        return "Hotel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
-                ", description='" + description + '\'' +
-                ", averageScore=" + averageScore +
-                ", link='" + link + '\'' +
-                ", icon='" + icon + '\'' +
-                '}';
+        return "{" +
+                "\"id\":" + id +
+                ", \"name\":\"" + name + '\"' +
+                ", \"country\":\"" + country + '\"' +
+                ", \"city\":\"" + city + '\"' +
+                ", \"description\":\"" + description + '\"' +
+                ", \"averageScore\":" + averageScore +
+                ", \"link\":\"" + link + '\"' +
+                ", \"icon\":\"" + icon + "\"}";
     }
 }
