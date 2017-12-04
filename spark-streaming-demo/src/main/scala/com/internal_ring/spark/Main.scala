@@ -30,7 +30,7 @@ object Main {
     val sparkSession = SparkSession
       .builder()
       .appName("sparkSession")
-      .config("spark.sql.warehouse.dir", "file:///D:\\Work\\BigData\\")
+      .config("spark.sql.warehouse.dir", "file:///warehouse")
       .getOrCreate()
     val topics = "test".split(",").toSet
     val kafkaParams = Map[String, String]("metadata.broker.list" -> "localhost:9092")
@@ -43,14 +43,12 @@ object Main {
     val averageScore = lines.map(line => {
       val res = Document.parse(line)
       print(res)
-      val flag = res.containsKey("hotel_id")
-      val hotel: Integer = res.getInteger("hotel_id")
-      val hotel_id = res.getInteger("hotel_id").longValue()
+      val hotel_id = res.getInteger("hotelId").longValue()
       val score =
         (res.getInteger("service").intValue() +
           res.getInteger("comfort").intValue() +
           res.getInteger("price").intValue() +
-          res.getInteger("distance_from_airport").intValue()).toDouble / 4
+          res.getInteger("distanceFromAirport").intValue()).toDouble / 4
       (hotel_id, score)
     })
     val windowedResults = averageScore.window(ANALITICS_CREATION_DURATION, ANALITICS_CREATION_DURATION)
@@ -84,21 +82,21 @@ object Main {
       val messages = sparkSession.read.json(rdd)
       //messages.show()
       val reviews = messages.rdd.map(row => {
-        val hotel_id = row.getAs[Long]("hotel_id")
+        val hotel_id = row.getAs[Long]("hotelId")
         val message = row.getAs[String]("message")
         val service = row.getAs[Long]("service").toByte
         val comfort = row.getAs[Long]("comfort").toByte
         val price = row.getAs[Long]("price").toByte
-        val distance_from_airport = row.getAs[Long]("distance_from_airport").toByte
+        val distance_from_airport = row.getAs[Long]("distanceFromAirport").toByte
         Review(hotel_id, message, service, comfort, price, distance_from_airport)
       }).map(review =>
         new Document()
-          .append("hotel_id", review.hotel_id)
+          .append("hotelId", review.hotel_id)
           .append("message", review.message)
           .append("service", review.service)
           .append("comfort", review.comfort)
           .append("price", review.price)
-          .append("distance_from_airport", review.distance_from_airport)
+          .append("distanceFromAirport", review.distance_from_airport)
       )
       //reviews.foreach(review => print(review))
       MongoSpark.save(reviews, writeConfigReviews)
