@@ -1,22 +1,25 @@
 package com.example.demo.domain;
 
 import com.mongodb.DBObject;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "reviews")
 public class Review {
+    @Id
+    private String id;
     private String message;
     private Integer service;
     private Integer comfort;
     private Integer price;
     private Integer distanceFromAirport;
     private Long hotelId;
-    private String city;
-    private String country;
 
     public Review() {
     }
 
     public Review(DBObject dbReview) {
-        this.hotelId = (long) dbReview.get("hotel_id");
+        this.hotelId = (long) dbReview.get("hotelId");
         this.message = (String) dbReview.get("message");
         this.comfort = (int) dbReview.get("comfort");
         this.service = (int) dbReview.get("service");
@@ -72,30 +75,14 @@ public class Review {
         return hotelId;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     @Override
     public String toString() {
         return "{\"message\":\"" + message + '\"' +
                 ", \"service\":" + service +
                 ", \"comfort\":" + comfort +
                 ", \"price\":" + price +
-                ", \"distance_from_airport\":" + distanceFromAirport +
-                ", \"hotel_id\":" + hotelId + "}";
+                ", \"distanceFromAirport\":" + distanceFromAirport +
+                ", \"hotelId\":" + hotelId + "}";
     }
 
 }
