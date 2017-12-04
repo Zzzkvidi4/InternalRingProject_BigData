@@ -66,6 +66,29 @@
         </table>
     </div>
 </div>
+
+<div class="container">
+    <!--/*@thymesVar id="averageMarks" type="java.util.List<com.example.demo.domain.AverageMarkPerPeriod>"*/-->
+    <h2>Средние оценки</h2>
+    <div th:if="${averageMarks.isEmpty()}">
+        <br/>
+        <h3 class="text-center">Нет оценок</h3>
+    </div>
+    <div th:unless="${averageMarks.isEmpty()}">
+        <table class="table table-striped">
+            <tr>
+                <th>Средняя оценка</th>
+                <th>Дата</th>
+            </tr>
+            <!--/*thymesVar id="avgMark" type="com.example.demo.domain.AverageMarkPerPeriod"*/-->
+            <tr th:each="avgMark,iterationStatus  : ${averageMarks}">
+                <td th:text="${avgMark.averageMark}"></td>
+                <td th:text="${avgMark.date}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="../js/bootstrap.js"></script>
 </body>

@@ -11,13 +11,13 @@ import kafka.serializer.StringDecoder
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.{SQLContext, SparkSession}
-import org.apache.spark.streaming.{Minutes, Seconds, StreamingContext}
+import org.apache.spark.streaming.{Milliseconds, Minutes, Seconds, StreamingContext}
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.bson.Document
 
 object Main {
-  val PACKAGE_CREATION_DURATION = Seconds(30)
-  val ANALITICS_CREATION_DURATION = PACKAGE_CREATION_DURATION * 2
+  val PACKAGE_CREATION_DURATION = org.apache.spark.streaming.Seconds(1)
+  val ANALITICS_CREATION_DURATION = Minutes(2)
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf().setAppName("TestSparkStreaming").setMaster("local[2]")
       .set("spark.mongodb.input.uri", "mongodb://127.0.0.1/")
@@ -35,7 +35,7 @@ object Main {
     val topics = "test".split(",").toSet
     val kafkaParams = Map[String, String]("metadata.broker.list" -> "localhost:9092")
     val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](sparkStreamingContext, kafkaParams, topics)
-    case class Review(hotel_id: Long, message: String, service: Byte, comfort: Byte, price: Byte, distance_from_airport: Byte)
+
     val lines = messages.map(_._2)
 
     //calculating average score per ANALITICS_CREATION_DURATION
@@ -55,7 +55,7 @@ object Main {
 
     //writing configuration
     val writeConfigReviews = WriteConfig(Map("collection" -> "reviews", "writeConcern.w" -> "majority"), Some(WriteConfig(sparkConf)))
-    val writeConfigAveragePerWeek = WriteConfig(Map("collection" -> "average_marks", "writeConcern.w" -> "majority"), Some(WriteConfig(sparkConf)))
+    val writeConfigAveragePerWeek = WriteConfig(Map("collection" -> "averageMarks", "writeConcern.w" -> "majority"), Some(WriteConfig(sparkConf)))
 
     //calculating average marks
     val sumMarks = windowedResults.reduceByKey((v1, v2) => v1 + v2)
@@ -72,7 +72,7 @@ object Main {
       val documents = rdd.map{
         case (hotel_id: Long, (average_mark: Double, version: Long)) =>
           val date = new Date()
-          new Document().append("hotel_id", hotel_id).append("average_mark", average_mark).append("version", version).append("date", date)
+          new Document().append("hotelId", hotel_id).append("averageMark", average_mark).append("version", version).append("date", date)
       }
       MongoSpark.save(documents, writeConfigAveragePerWeek)
     })
@@ -82,21 +82,9 @@ object Main {
       val messages = sparkSession.read.json(rdd)
       //messages.show()
       val reviews = messages.rdd.map(row => {
-        val hotel_id = row.getAs[Long]("hotelId")
-        val message = row.getAs[String]("message")
-        val service = row.getAs[Long]("service").toByte
-        val comfort = row.getAs[Long]("comfort").toByte
-        val price = row.getAs[Long]("price").toByte
-        val distance_from_airport = row.getAs[Long]("distanceFromAirport").toByte
-        Review(hotel_id, message, service, comfort, price, distance_from_airport)
+        new Review(row)
       }).map(review =>
-        new Document()
-          .append("hotelId", review.hotel_id)
-          .append("message", review.message)
-          .append("service", review.service)
-          .append("comfort", review.comfort)
-          .append("price", review.price)
-          .append("distanceFromAirport", review.distance_from_airport)
+        review.toDocument
       )
       //reviews.foreach(review => print(review))
       MongoSpark.save(reviews, writeConfigReviews)
